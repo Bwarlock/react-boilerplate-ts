@@ -1,14 +1,28 @@
-import { Login_Interface } from "../interfaces/api_interaces";
-import { BaseAxiosInstance } from "./axios";
+import { Api_Interface } from "../interfaces/api_interaces";
+import { LoginAxiosInstance } from "./axios";
+
+// Api Endpoints
 
 export function Login(data: object) {
-	return (Login as unknown as Login_Interface).v1(data);
+	return (Login as unknown as Api_Interface).v1(data);
 }
 
 Login.v1 = function v1(data: object) {
-	return BaseAxiosInstance({
+	return LoginAxiosInstance({
 		method: "post",
 		url: "/auth/login",
+		data: data,
+	});
+};
+
+export function Register(data: object) {
+	return (Login as unknown as Api_Interface).v1(data);
+}
+
+Register.v1 = function v1(data: object) {
+	return LoginAxiosInstance({
+		method: "post",
+		url: "/auth/register",
 		data: data,
 	});
 };

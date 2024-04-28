@@ -6,16 +6,24 @@ export const BaseAxiosInstance = axios.create({
 	baseURL: BASE_URL,
 });
 
-export const CredentialAxiosInstance = axios.create({
+export const LoginAxiosInstance = axios.create({
 	baseURL: BASE_URL,
 	withCredentials: true,
 });
 
-CredentialAxiosInstance.interceptors.request.use(
+export const AuthAxiosInstance = axios.create({
+	baseURL: BASE_URL,
+	withCredentials: true,
+});
+
+AuthAxiosInstance.interceptors.request.use(
 	(config) => {
 		// Get the token from cookies or localStorage
 		// Add the token to the headers
-		config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+		// Switch to Cookie httpOnly and Secure When possible
+		config.headers.Authorization = `Bearer ${
+			localStorage.getItem("token") || ""
+		}`;
 		return config;
 	},
 	(error) => {

@@ -1,12 +1,18 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useLogin } from "../api/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 function Login() {
 	const [values, setValues] = useState({
-		username: "",
+		email: "",
 		password: "",
 		domainName: "",
 	});
 	const login = useLogin();
+	const { user } = useSelector((state: RootState) => state.global);
+	useEffect(() => {
+		console.log("Persisted User", user);
+	}, []);
 
 	const handleLogin = (e: FormEvent) => {
 		e.preventDefault();
@@ -16,13 +22,13 @@ function Login() {
 	return (
 		<>
 			<form action="#" onSubmit={handleLogin}>
-				Username :{" "}
+				Email :{" "}
 				<input
 					type="text"
-					name="username"
+					name="email"
 					onChange={(e) => {
 						setValues((val) => {
-							return { ...val, username: e.target.value };
+							return { ...val, email: e.target.value };
 						});
 					}}
 				/>
